@@ -48,3 +48,55 @@
 	   	  ((and (<= b c) (<= b a)) (square-sums c a))
 		  (else (square-sums a b))
 	 ))
+
+
+;; 1.4: Observe that our model of evaluation allows for combinations
+;;  whose operators are compound expressions. Use this observation to describe 
+;;  the behavior of the following proceudre:
+
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+
+;; ans: if b is greater than 0 than set the evaluation to be (a + b)
+;;  	else set the evaluation to be (a - (-b)) -> (a + b)
+
+
+;; 1.5 Ben Bitdiddle has invented a test to determine whether the interpreter
+;;  he is faced with is using applicative-order evaluation or normal-order 
+;;  evaluation. He defines the following two procedures:
+
+(define (p) (p))
+(define (test x y) 
+	(if (= x 0) 0 y))
+
+;;  then he evaluates the epxression
+
+(test 0 (p))
+
+;; What behavior will Ben observe with an interpreter that uses applicative-order
+;;  evaluation? What behavior will he observe with an interpreter that uses
+;;  normal-order evaluation? Explain your answer. (Asume that the evaluation
+;;  rule for the special form "if" is the same whether the interpreter is using
+;;  normal or applicative order: The predicate expression is evaluated first, 
+;;  and the result determines whether to evaluate the consequent or the
+;; alternative expression.)
+
+;; ans: for the applicative-order evalutation, the arguments (operands) of a procedure are 
+;;  evaluated first and then applied to the procedure body (strict evaluation). The first argument of "test" 
+;;  is "0" which is a primitive expression that evaluates to "0", the second argument "(p)" is a paramerterless 
+;;  procudure that evaluates "(p)", itself. In other words, it keeps calling itself. So we never
+;;  get a finite answer for the second arguement because the procedure never terminates the expression.
+;;  We get into an infinite loop.
+(test 0 (p))
+(test 0 (p))
+(test 0 (p))
+
+;; ans: for normal-order evaluation, the arguments (operands) will not be evaluated until they are
+;;  needed. In this case, "(p)" is a paramerterless procedure and is passed into the the body of 
+;;  the "test" procedure. Since "0 = 0" we return "0" and never evaluate the "(p)" procedure, 
+;;  because in this case we never need to evaluate it. Only if the "if" statement is false,
+;;  then we would need to evalute "(p)". This is known as "Lazy evaluation"
+(test 0 (p))
+(if (= 0 0) 0 (p))
+(if true 0 (p))
+0
