@@ -84,7 +84,7 @@
 ;; ans: for the applicative-order evalutation, the arguments (operands) of a procedure are 
 ;;  evaluated first and then applied to the procedure body (strict evaluation). The first argument of "test" 
 ;;  is "0" which is a primitive expression that evaluates to "0", the second argument "(p)" is a paramerterless 
-;;  procudure that evaluates "(p)", itself. In other words, it keeps calling itself. So we never
+;;  procedure that evaluates "(p)", itself. In other words, it keeps calling itself. So we never
 ;;  get a finite answer for the second arguement because the procedure never terminates the expression.
 ;;  We get into an infinite loop.
 (test 0 (p))
