@@ -41,7 +41,8 @@
 
 (define (<= a b) (or (< a b) (= a b)))
 (define (square-sums a b) 
-	(+ (* a a) (* b b)))
+	(+ (* a a) (* b b))
+	)
 (define (sum-squares-large a b c)
 	(cond ((and (<= c b) (<= c a)) (square-sums a b))
 	   	  ((and (<= a c) (<= a b)) (square-sums b c))
